@@ -100,6 +100,7 @@ def qlearning_dataset(env, dataset=None, terminate_on_end=False, **kwargs):
     if 'timeouts' in dataset:
         use_timeouts = True
 
+    n_dismissed = 0
     episode_step = 0
     for i in range(N-1):
         obs = dataset['observations'][i].astype(np.float32)
@@ -107,6 +108,11 @@ def qlearning_dataset(env, dataset=None, terminate_on_end=False, **kwargs):
         action = dataset['actions'][i].astype(np.float32)
         reward = dataset['rewards'][i].astype(np.float32)
         done_bool = bool(dataset['terminals'][i])
+
+        dismiss = np.abs((new_obs - obs)[0]) > 0.25 or np.abs((new_obs - obs)[1]) > 0.25
+        if dismiss:
+            n_dismissed += 1
+            continue
 
         if use_timeouts:
             final_timestep = dataset['timeouts'][i]
@@ -125,6 +131,8 @@ def qlearning_dataset(env, dataset=None, terminate_on_end=False, **kwargs):
         reward_.append(reward)
         done_.append(done_bool)
         episode_step += 1
+
+    print("Number of dismissed samples: {}".format(n_dismissed))
 
     return {
         'observations': np.array(obs_),
