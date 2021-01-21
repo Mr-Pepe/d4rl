@@ -109,10 +109,11 @@ def qlearning_dataset(env, dataset=None, terminate_on_end=False, **kwargs):
         reward = dataset['rewards'][i].astype(np.float32)
         done_bool = bool(dataset['terminals'][i])
 
-        dismiss = np.abs((new_obs - obs)[0]) > 0.25 or np.abs((new_obs - obs)[1]) > 0.25
-        if dismiss:
-            n_dismissed += 1
-            continue
+        if 'antmaze' in env.spec.id:
+            dismiss = np.abs((new_obs - obs)[0]) > 0.25 or np.abs((new_obs - obs)[1]) > 0.25
+            if dismiss:
+                n_dismissed += 1
+                continue
 
         if use_timeouts:
             final_timestep = dataset['timeouts'][i]
