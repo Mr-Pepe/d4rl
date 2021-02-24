@@ -62,6 +62,11 @@ dataset = d4rl.qlearning_dataset(env)
 
 Datasets are automatically downloaded to the `~/.d4rl/datasets` directory when `get_dataset()` is called. If you would like to change the location of this directory, you can set the `$D4RL_DATASET_DIR` environment variable to the directory of your choosing, or pass in the dataset filepath directly into the `get_dataset` method.
 
+### Normalizing Scores
+You can use the `env.get_normalized_score(returns)` function to compute a normalized score for an episode, where `returns` is the undiscounted total sum of rewards accumulated during an episode.
+
+The individual min and max reference scores are stored in `d4rl/infos.py` for reference.
+
 ## Algorithm Implementations
 
 We have aggregated implementations of various offline RL algorithms in a [separate repository](https://github.com/rail-berkeley/d4rl_evaluations). 
@@ -69,6 +74,13 @@ We have aggregated implementations of various offline RL algorithms in a [separa
 ## Off-Policy Evaluations
 
 D4RL currently has limited support for off-policy evaluation methods, on a select few locomotion tasks. We provide trained reference policies and a set of performance metrics. Additional details can be found in the [wiki](https://github.com/rail-berkeley/d4rl/wiki/Off-Policy-Evaluation).
+
+## Recent Updates
+
+### 2-12-2020
+- Added new Gym-MuJoCo datasets (labeled v2) which fixed Hopper's performance and the qpos/qvel fields.
+- Added additional wiki documentation on [generating datasets](https://github.com/rail-berkeley/d4rl/wiki/Dataset-Reproducibility-Guide).
+
 
 ## Acknowledgements
 
