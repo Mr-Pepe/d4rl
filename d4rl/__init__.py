@@ -103,7 +103,7 @@ def qlearning_dataset(env, dataset=None, terminate_on_end=False, **kwargs):
     episode_step = 0
     for i in range(N-1):
         obs = dataset['observations'][i].astype(np.float32)
-        new_obs = dataset['observations'][i+1].astype(np.float32)
+        new_obs = dataset['next_observations'][i].astype(np.float32)
         action = dataset['actions'][i].astype(np.float32)
         reward = dataset['rewards'][i].astype(np.float32)
         done_bool = bool(dataset['terminals'][i])
